@@ -1,6 +1,10 @@
 const colorValues = [
  
     {
+        value: 0,
+        color: "rgb(255,255,255)"
+    },
+    {
         value: 1,
         color: "rgb(200,200,50)"
     },
