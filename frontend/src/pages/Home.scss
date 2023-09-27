@@ -95,6 +95,7 @@
         .fromLeft,
         .fromTop,
         .fromBottom,
+        .explosion,
         .initial {
           color: white;
           font-weight: 900;
@@ -109,30 +110,42 @@
         .textCell {
           opacity: 1;
           transition: opacity 1s, transform 0.5s;
+          color: white;
         }
 
         .appear {
           animation: animAppear ease 0.5s;
+          color: white;
         }
 
         .disappear {
           animation: animDisappear ease 0.5s;
+          color: rgba(0, 0, 0, 0);
+        }
+
+        .explosion {
+          animation: animExplosion ease 1s;
+          color: rgba(0, 0, 0, 0);
         }
 
         .fromRight {
           animation: comeFromRight ease 0.5s;
+          color: white;
         }
 
         .fromLeft {
           animation: comeFromLeft ease 0.5s;
+          color: white;
         }
 
         .fromTop {
           animation: comeFromTop ease 0.5s;
+          color: white;
         }
 
         .fromBottom {
           animation: comeFromBottom ease 0.5s;
+          color: white;
         }
       }
 
@@ -188,7 +201,19 @@
   100% {
     opacity: 0;
     background-color: black;
-    transform: scale(0);
+    transform: scale(0) rotate(360deg);
+    clip-path: polygon(
+      50% 0%,
+      61% 35%,
+      98% 35%,
+      68% 57%,
+      79% 91%,
+      50% 70%,
+      21% 91%,
+      32% 57%,
+      2% 35%,
+      39% 35%
+    );
   }
 }
 
@@ -200,5 +225,47 @@
   100% {
     opacity: 1;
     transform: scale(1);
+  }
+}
+
+@keyframes animExplosion {
+  0% {
+    opacity: 1;
+    clip-path: polygon(
+      50% 0%,
+      63% 0,
+      100% 0,
+      100% 62%,
+      100% 100%,
+      50% 100%,
+      33% 100%,
+      0 100%,
+      0 0,
+      18% 0
+    );
+    background-color: black;
+    transform: scale(1);
+  }
+  70% {
+    opacity: 1;
+    clip-path: polygon(
+      50% 0%,
+      61% 35%,
+      98% 35%,
+      68% 57%,
+      79% 91%,
+      50% 70%,
+      21% 91%,
+      32% 57%,
+      2% 35%,
+      39% 35%
+    );
+    background-color: black;
+    transform: scale(1.5);
+  }
+  100% {
+    opacity: 0;
+    background-color: black;
+    transform: scale(0) rotate(720deg);
   }
 }

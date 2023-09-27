@@ -160,18 +160,19 @@ export default function Home() {
       const cell4 = myGrid.find((cell) => cell.x === x && cell.y === 4)
 
       if (
+        cell1.value !== 0 &&
         cell1.value === cell2.value &&
         cell1.value === cell3.value &&
         cell1.value === cell4.value
       ) {
-        setScore(score + 4 * cell1.value)
+        setScore((prevstate) => prevstate + 4 * cell1.value)
 
         newGrid = newGrid.map((cell) =>
           (cell.x === cell1.x && cell.y === cell1.y) ||
           (cell.x === cell2.x && cell.y === cell2.y) ||
           (cell.x === cell3.x && cell.y === cell3.y) ||
           (cell.x === cell4.x && cell.y === cell4.y)
-            ? { ...cell, value: 0 }
+            ? { ...cell, value: 0, className: "explosion" }
             : cell
         )
       }
@@ -185,18 +186,19 @@ export default function Home() {
       const cell4 = myGrid.find((cell) => cell.x === 4 && cell.y === y)
 
       if (
+        cell1.value !== 0 &&
         cell1.value === cell2.value &&
         cell1.value === cell3.value &&
         cell1.value === cell4.value
       ) {
-        setScore(score + 4 * cell1.value)
+        setScore((prevstate) => prevstate + 4 * cell1.value)
 
         newGrid = newGrid.map((cell) =>
           (cell.x === cell1.x && cell.y === cell1.y) ||
           (cell.x === cell2.x && cell.y === cell2.y) ||
           (cell.x === cell3.x && cell.y === cell3.y) ||
           (cell.x === cell4.x && cell.y === cell4.y)
-            ? { ...cell, value: 0 }
+            ? { ...cell, value: 0, className: "explosion" }
             : cell
         )
       }
@@ -227,69 +229,73 @@ export default function Home() {
         )
 
         if (
+          activeCell.value !== 0 &&
           activeCell.value === cellUp.value &&
           activeCell.value === cellUpLeft.value &&
           activeCell.value === cellLeft.value
         ) {
-          setScore(score + 4 * activeCell.value)
+          setScore((prevstate) => prevstate + 4 * activeCell.value)
 
           newGrid = newGrid.map((cell) =>
             (cell.x === activeCell.x && cell.y === activeCell.y) ||
             (cell.x === cellUp.x && cell.y === cellUp.y) ||
             (cell.x === cellUpLeft.x && cell.y === cellUpLeft.y) ||
             (cell.x === cellLeft.x && cell.y === cellLeft.y)
-              ? { ...cell, value: 0 }
+              ? { ...cell, value: 0, className: "explosion" }
               : cell
           )
         }
 
         if (
+          activeCell.value !== 0 &&
           activeCell.value === cellUp.value &&
           activeCell.value === cellUpRight.value &&
           activeCell.value === cellRight.value
         ) {
-          setScore(score + 4 * activeCell.value)
+          setScore((prevstate) => prevstate + 4 * activeCell.value)
 
           newGrid = newGrid.map((cell) =>
             (cell.x === activeCell.x && cell.y === activeCell.y) ||
             (cell.x === cellUp.x && cell.y === cellUp.y) ||
             (cell.x === cellUpRight.x && cell.y === cellUpRight.y) ||
             (cell.x === cellRight.x && cell.y === cellRight.y)
-              ? { ...cell, value: 0 }
+              ? { ...cell, value: 0, className: "explosion" }
               : cell
           )
         }
 
         if (
+          activeCell.value !== 0 &&
           activeCell.value === cellDown.value &&
           activeCell.value === cellDownLeft.value &&
           activeCell.value === cellLeft.value
         ) {
-          setScore(score + 4 * activeCell.value)
+          setScore((prevstate) => prevstate + 4 * activeCell.value)
 
           newGrid = newGrid.map((cell) =>
             (cell.x === activeCell.x && cell.y === activeCell.y) ||
             (cell.x === cellDown.x && cell.y === cellDown.y) ||
             (cell.x === cellDownLeft.x && cell.y === cellDownLeft.y) ||
             (cell.x === cellLeft.x && cell.y === cellLeft.y)
-              ? { ...cell, value: 0 }
+              ? { ...cell, value: 0, className: "explosion" }
               : cell
           )
         }
 
         if (
+          activeCell.value !== 0 &&
           activeCell.value === cellDown.value &&
           activeCell.value === cellDownRight.value &&
           activeCell.value === cellRight.value
         ) {
-          setScore(score + 4 * activeCell.value)
+          setScore((prevstate) => prevstate + 4 * activeCell.value)
 
           newGrid = newGrid.map((cell) =>
             (cell.x === activeCell.x && cell.y === activeCell.y) ||
             (cell.x === cellDown.x && cell.y === cellDown.y) ||
             (cell.x === cellDownRight.x && cell.y === cellDownRight.y) ||
             (cell.x === cellRight.x && cell.y === cellRight.y)
-              ? { ...cell, value: 0 }
+              ? { ...cell, value: 0, className: "explosion" }
               : cell
           )
         }
@@ -477,7 +483,6 @@ export default function Home() {
 
     setScore(score + newScore)
   }
-  
 
   // const swipeTop = (myGrid, count, newScore) => {
   //   // let newGrid = gridKill10
@@ -637,7 +642,8 @@ export default function Home() {
                   ? {
                       ...cellule,
                       value: cellnext.value,
-                      className: cellnext.value !== 0 ? "fromBottom" : "initial",
+                      className:
+                        cellnext.value !== 0 ? "fromBottom" : "initial",
                     } // prend la valeur de la cellule suivante
                   : cellule.x === x + 1 && cellule.y === y // la cellule suivante
                   ? { ...cellule, value: 0 } // devient nulle (0) car elle a été déplacée
@@ -702,8 +708,6 @@ export default function Home() {
 
     setScore(score + newScore)
   }
-
-
 
   // const swipeRight = (myGrid, count, newScore) => {
   //   // let newGrid = gridKill10
@@ -810,8 +814,6 @@ export default function Home() {
   //   setGridKill10(newGrid)
   //   setScore(score + newScore)
   // }
-
-
 
   const swipeRight = (myGrid, count, newScore) => {
     // let newGrid = gridKill10
@@ -931,9 +933,6 @@ export default function Home() {
     setScore(score + newScore)
   }
 
-
-
-
   // const swipeBottom = (myGrid, count, newScore) => {
   //   // let newGrid = gridKill10
   //   let newGrid = myGrid
@@ -1039,8 +1038,6 @@ export default function Home() {
   //   setGridKill10(newGrid)
   //   setScore(score + newScore)
   // }
-
-
 
   const swipeBottom = (myGrid, count, newScore) => {
     // let newGrid = gridKill10
@@ -1159,10 +1156,6 @@ export default function Home() {
 
     setScore(score + newScore)
   }
-
-
-
-
 
   // Créer une fonction qui gère l'événement onKeyDown
   const handleKeyDown = (event) => {
