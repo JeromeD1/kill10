@@ -47,10 +47,10 @@ export default function Home() {
     }
   }
 
-  const handleRandomNewNumber = () => {
+  const handleRandomNewNumber = (newGame) => {
     let returnNumber
 
-    if (score < 100) {
+    if (score < 100 || newGame) {
       returnNumber = Math.random() < 0.33 ? 3 : Math.random() > 0.66 ? 5 : 7
     } else if (score < 200) {
       returnNumber =
@@ -1382,13 +1382,13 @@ export default function Home() {
     const firstPosition = findFreeRandomPosition(newGrid)
     newGrid = newGrid.map((cell) =>
       cell.x === firstPosition.randomX && cell.y === firstPosition.randomY
-        ? { ...cell, value: handleRandomNewNumber() }
+        ? { ...cell, value: handleRandomNewNumber("newGame") }
         : cell
     )
     const secondPosition = findFreeRandomPosition(newGrid)
     newGrid = newGrid.map((cell) =>
       cell.x === secondPosition.randomX && cell.y === secondPosition.randomY
-        ? { ...cell, value: handleRandomNewNumber() }
+        ? { ...cell, value: handleRandomNewNumber("newGame") }
         : cell
     )
     setGridKill10(newGrid)
