@@ -165,7 +165,9 @@ export default function Home() {
         cell1.value === cell3.value &&
         cell1.value === cell4.value
       ) {
-        setScore((prevstate) => prevstate + 4 * cell1.value)
+        setScore((prevstate) => {
+          return prevstate + 100
+        })
 
         newGrid = newGrid.map((cell) =>
           (cell.x === cell1.x && cell.y === cell1.y) ||
@@ -191,7 +193,9 @@ export default function Home() {
         cell1.value === cell3.value &&
         cell1.value === cell4.value
       ) {
-        setScore((prevstate) => prevstate + 4 * cell1.value)
+        setScore((prevstate) => {
+          return prevstate + 100
+        })
 
         newGrid = newGrid.map((cell) =>
           (cell.x === cell1.x && cell.y === cell1.y) ||
@@ -234,7 +238,9 @@ export default function Home() {
           activeCell.value === cellUpLeft.value &&
           activeCell.value === cellLeft.value
         ) {
-          setScore((prevstate) => prevstate + 4 * activeCell.value)
+          setScore((prevstate) => {
+            return prevstate + 100
+          })
 
           newGrid = newGrid.map((cell) =>
             (cell.x === activeCell.x && cell.y === activeCell.y) ||
@@ -252,7 +258,9 @@ export default function Home() {
           activeCell.value === cellUpRight.value &&
           activeCell.value === cellRight.value
         ) {
-          setScore((prevstate) => prevstate + 4 * activeCell.value)
+          setScore((prevstate) => {
+            return prevstate + 100
+          })
 
           newGrid = newGrid.map((cell) =>
             (cell.x === activeCell.x && cell.y === activeCell.y) ||
@@ -270,7 +278,9 @@ export default function Home() {
           activeCell.value === cellDownLeft.value &&
           activeCell.value === cellLeft.value
         ) {
-          setScore((prevstate) => prevstate + 4 * activeCell.value)
+          setScore((prevstate) => {
+            return prevstate + 100
+          })
 
           newGrid = newGrid.map((cell) =>
             (cell.x === activeCell.x && cell.y === activeCell.y) ||
@@ -288,7 +298,9 @@ export default function Home() {
           activeCell.value === cellDownRight.value &&
           activeCell.value === cellRight.value
         ) {
-          setScore((prevstate) => prevstate + 4 * activeCell.value)
+          setScore((prevstate) => {
+            return prevstate + 100
+          })
 
           newGrid = newGrid.map((cell) =>
             (cell.x === activeCell.x && cell.y === activeCell.y) ||
@@ -366,7 +378,7 @@ export default function Home() {
     return true
   }
 
-  const swipeLeft = (myGrid, count, newScore) => {
+  const swipeLeft = (myGrid, count, newScore, coeffScore) => {
     // let newGrid = gridKill10
     let newGrid = myGrid
 
@@ -409,6 +421,7 @@ export default function Home() {
             )
 
             newScore += 10
+            coeffScore++
             changeGrid = true // il y a eu une modification donc changeGrid passe à true
           } else if (cell.value === 0 && cell.className !== "disappear") {
             // la valeur de la cellule est 0 et est différente de la valeur de la cellule suivante
@@ -474,14 +487,14 @@ export default function Home() {
       }
     } else {
       handleGameOver(newGrid)
-      return swipeLeft(newGrid, count + 1, newScore)
+      return swipeLeft(newGrid, count + 1, newScore, coeffScore)
     }
 
     handleGameOver(newGrid)
 
     setGridKill10(newGrid)
 
-    setScore(score + newScore)
+    setScore((prevstate) => prevstate + newScore * coeffScore)
   }
 
   // const swipeTop = (myGrid, count, newScore) => {
@@ -590,7 +603,7 @@ export default function Home() {
   //   setScore(score + newScore)
   // }
 
-  const swipeTop = (myGrid, count, newScore) => {
+  const swipeTop = (myGrid, count, newScore, coeffScore) => {
     // let newGrid = gridKill10
     let newGrid = myGrid
 
@@ -633,6 +646,7 @@ export default function Home() {
             )
 
             newScore += 10
+            coeffScore++
             changeGrid = true // il y a eu une modification donc changeGrid passe à true
           } else if (cell.value === 0 && cell.className !== "disappear") {
             // la valeur de la cellule est 0 et est différente de la valeur de la cellule suivante
@@ -699,14 +713,14 @@ export default function Home() {
       }
     } else {
       handleGameOver(newGrid)
-      return swipeTop(newGrid, count + 1, newScore)
+      return swipeTop(newGrid, count + 1, newScore, coeffScore)
     }
 
     handleGameOver(newGrid)
 
     setGridKill10(newGrid)
 
-    setScore(score + newScore)
+    setScore((prevstate) => prevstate + newScore * coeffScore)
   }
 
   // const swipeRight = (myGrid, count, newScore) => {
@@ -815,7 +829,7 @@ export default function Home() {
   //   setScore(score + newScore)
   // }
 
-  const swipeRight = (myGrid, count, newScore) => {
+  const swipeRight = (myGrid, count, newScore, coeffScore) => {
     // let newGrid = gridKill10
     let newGrid = myGrid
 
@@ -858,6 +872,7 @@ export default function Home() {
             )
 
             newScore += 10
+            coeffScore++
             changeGrid = true // il y a eu une modification donc changeGrid passe à true
           } else if (cell.value === 0 && cell.className !== "disappear") {
             // la valeur de la cellule est 0 et est différente de la valeur de la cellule suivante
@@ -923,14 +938,14 @@ export default function Home() {
       }
     } else {
       handleGameOver(newGrid)
-      return swipeRight(newGrid, count + 1, newScore)
+      return swipeRight(newGrid, count + 1, newScore, coeffScore)
     }
 
     handleGameOver(newGrid)
 
     setGridKill10(newGrid)
 
-    setScore(score + newScore)
+    setScore((prevstate) => prevstate + newScore * coeffScore)
   }
 
   // const swipeBottom = (myGrid, count, newScore) => {
@@ -1039,7 +1054,7 @@ export default function Home() {
   //   setScore(score + newScore)
   // }
 
-  const swipeBottom = (myGrid, count, newScore) => {
+  const swipeBottom = (myGrid, count, newScore, coeffScore) => {
     // let newGrid = gridKill10
     let newGrid = myGrid
 
@@ -1082,6 +1097,7 @@ export default function Home() {
             )
 
             newScore += 10
+            coeffScore++
             changeGrid = true // il y a eu une modification donc changeGrid passe à true
           } else if (cell.value === 0 && cell.className !== "disappear") {
             // la valeur de la cellule est 0 et est différente de la valeur de la cellule suivante
@@ -1147,14 +1163,14 @@ export default function Home() {
       }
     } else {
       handleGameOver(newGrid)
-      return swipeBottom(newGrid, count + 1, newScore)
+      return swipeBottom(newGrid, count + 1, newScore, coeffScore)
     }
 
     handleGameOver(newGrid)
 
     setGridKill10(newGrid)
 
-    setScore(score + newScore)
+    setScore((prevstate) => prevstate + newScore * coeffScore)
   }
 
   // Créer une fonction qui gère l'événement onKeyDown
@@ -1165,16 +1181,16 @@ export default function Home() {
     // Comparer le code avec les codes des touches flèches
     switch (keyCode) {
       case 37: // Flèche gauche
-        swipeLeft(gridKill10, 0, 0)
+        swipeLeft(gridKill10, 0, 0, 0)
         break
       case 38: // Flèche haut
-        swipeTop(gridKill10, 0, 0)
+        swipeTop(gridKill10, 0, 0, 0)
         break
       case 39: // Flèche droite
-        swipeRight(gridKill10, 0, 0)
+        swipeRight(gridKill10, 0, 0, 0)
         break
       case 40: // Flèche bas
-        swipeBottom(gridKill10, 0, 0)
+        swipeBottom(gridKill10, 0, 0, 0)
         break
       default:
         break
@@ -1184,6 +1200,7 @@ export default function Home() {
   const handleRestart = () => {
     setScore(0)
     setGameOver(false)
+    setValuesFallen([])
 
     let newGrid = createGrid()
     const firstPosition = findFreeRandomPosition(newGrid)
