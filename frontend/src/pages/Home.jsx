@@ -319,25 +319,25 @@ export default function Home() {
         const cellYp1 = myGrid.find((cell) => cell.x === x && cell.y === y + 1)
 
         if (cellXm1 !== undefined) {
-          if (cellXm1.value === activeCell.value) {
+          if (cellXm1.value + activeCell.value === 10) {
             return false
           }
         }
 
         if (cellXp1 !== undefined) {
-          if (cellXp1.value === activeCell.value) {
+          if (cellXp1.value + activeCell.value === 10) {
             return false
           }
         }
 
         if (cellYm1 !== undefined) {
-          if (cellYm1.value === activeCell.value) {
+          if (cellYm1.value + activeCell.value === 10) {
             return false
           }
         }
 
         if (cellYp1 !== undefined) {
-          if (cellYp1.value === activeCell.value) {
+          if (cellYp1.value + activeCell.value === 10) {
             return false
           }
         }
@@ -345,16 +345,17 @@ export default function Home() {
     }
 
     setGameOver(true)
+    setValuesFallen([])
 
-    // axios
-    //   .post("http://localhost:4242/scores", {
-    //     score,
-    //   })
-    //   .then(() => {
-    //     axios
-    //       .get("http://localhost:4242/scores")
-    //       .then(({ data }) => setHighScore(data.score))
-    //   })
+    axios
+      .post("http://localhost:4242/scores", {
+        score,
+      })
+      .then(() => {
+        axios
+          .get("http://localhost:4242/scores")
+          .then(({ data }) => setHighScore(data.score))
+      })
 
     return true
   }
@@ -471,6 +472,7 @@ export default function Home() {
     handleGameOver(newGrid)
 
     setGridKill10(newGrid)
+    console.log("newGrid", newGrid);
 
     setScore(score + newScore)
   }
