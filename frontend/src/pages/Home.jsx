@@ -607,7 +607,7 @@ export default function Home() {
                   ? {
                       ...cellule,
                       value: cellnext.value,
-                      className: cellnext.value !== 0 ? "fromRight" : "initial",
+                      className: cellule.className === "explosion" ? "explosion" : cellnext.value !== 0 ? "fromRight" : "initial",
                     } // prend la valeur de la cellule suivante
                   : cellule.x === x && cellule.y === y + 1 // la cellule suivante
                   ? { ...cellule, value: 0 } // devient nulle (0) car elle a été déplacée
@@ -832,7 +832,7 @@ export default function Home() {
                   ? {
                       ...cellule,
                       value: cellnext.value,
-                      className:
+                      className: cellule.className === "explosion" ? "explosion" :
                         cellnext.value !== 0 ? "fromBottom" : "initial",
                     } // prend la valeur de la cellule suivante
                   : cellule.x === x + 1 && cellule.y === y // la cellule suivante
@@ -1058,7 +1058,7 @@ export default function Home() {
                   ? {
                       ...cellule,
                       value: cellnext.value,
-                      className: cellnext.value !== 0 ? "fromLeft" : "initial",
+                      className: cellule.className === "explosion" ? "explosion" : cellnext.value !== 0 ? "fromLeft" : "initial",
                     } // prend la valeur de la cellule suivante
                   : cellule.x === x && cellule.y === y - 1 // la cellule suivante
                   ? { ...cellule, value: 0 } // devient nulle (0) car elle a été déplacée
@@ -1283,7 +1283,7 @@ export default function Home() {
                   ? {
                       ...cellule,
                       value: cellnext.value,
-                      className: cellnext.value !== 0 ? "fromTop" : "initial",
+                      className: cellule.className === "explosion" ? "explosion" : cellnext.value !== 0 ? "fromTop" : "initial",
                     } // prend la valeur de la cellule suivante
                   : cellule.x === x - 1 && cellule.y === y // la cellule suivante
                   ? { ...cellule, value: 0 } // devient nulle (0) car elle a été déplacée
