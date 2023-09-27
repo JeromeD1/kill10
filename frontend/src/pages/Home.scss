@@ -89,6 +89,12 @@
         opacity: 1;
 
         .textCell,
+        .fromRight,
+        .appear,
+        .disappear,
+        .fromLeft,
+        .fromTop,
+        .fromBottom,
         .initial {
           color: white;
           font-weight: 900;
@@ -97,17 +103,36 @@
           height: 100%;
           line-height: 190%;
           box-sizing: border-box;
+        }
+
+        .initial,
+        .textCell {
           opacity: 1;
           transition: opacity 1s, transform 0.5s;
         }
 
+        .appear {
+          animation: animAppear ease 0.5s;
+        }
+
         .disappear {
-          opacity: 0;
-          transform: scale(0);
+          animation: animDisappear ease 0.5s;
         }
 
         .fromRight {
-          animation: comeFromRight ease 1.5s;
+          animation: comeFromRight ease 0.5s;
+        }
+
+        .fromLeft {
+          animation: comeFromLeft ease 0.5s;
+        }
+
+        .fromTop {
+          animation: comeFromTop ease 0.5s;
+        }
+
+        .fromBottom {
+          animation: comeFromBottom ease 0.5s;
         }
       }
 
@@ -120,9 +145,60 @@
 
 @keyframes comeFromRight {
   0% {
-    transform: translateX(50px);
+    transform: translateX(100px);
   }
   100% {
     transform: translateX(0);
+  }
+}
+
+@keyframes comeFromLeft {
+  0% {
+    transform: translateX(-100px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes comeFromTop {
+  0% {
+    transform: translateY(-100px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes comeFromBottom {
+  0% {
+    transform: translateY(100px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes animDisappear {
+  0% {
+    opacity: 1;
+    background-color: black;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    background-color: black;
+    transform: scale(0);
+  }
+}
+
+@keyframes animAppear {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
   }
 }

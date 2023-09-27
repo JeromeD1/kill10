@@ -404,7 +404,7 @@ export default function Home() {
 
             newScore += 10
             changeGrid = true // il y a eu une modification donc changeGrid passe à true
-          } else if (cell.value === 0) {
+          } else if (cell.value === 0 && cell.className !== "disappear") {
             // la valeur de la cellule est 0 et est différente de la valeur de la cellule suivante
             newGrid = newGrid.map(
               (cellule) =>
@@ -419,12 +419,12 @@ export default function Home() {
                   : cellule // les autres cellules ne changent pas
             )
 
-            if (cellnext.value !== cell.value) {
+            if (
+              cellnext.value !== cell.value &&
+              cell.className !== "disappear"
+            ) {
               changeGrid = true
             } // il y a eu une modification donc changeGrid passe à true
-          } else if (cell.value !== cellnext.value) {
-            // les valeurs de la cellule et de la suivante sont différentes mais cell.value !== 0
-            newGrid = newGrid // on ne fait rien
           }
         }
       }
@@ -439,14 +439,16 @@ export default function Home() {
           (cell) => cell.x === x && cell.y === y + 1
         )
 
-        if (cell.value === 0 && cellnext.value !== 0) {
+        if (
+          cell.value === 0 &&
+          cell.className !== "disappear" &&
+          cellnext.value !== 0
+        ) {
           allOnLeft = false
         }
       }
     }
 
-    // console.log("allOnLeft",allOnLeft);
-    // console.log("changeGrid", changeGrid);
     // si allOnLeft = true et que changeGrid = false on rajoute un chiffre
     if (allOnLeft === true && changeGrid === false) {
       if (count > 0) {
@@ -472,7 +474,6 @@ export default function Home() {
     handleGameOver(newGrid)
 
     setGridKill10(newGrid)
-    console.log("newGrid", newGrid);
 
     setScore(score + newScore)
   }
@@ -916,9 +917,10 @@ export default function Home() {
             >
               {
                 <p
-                  className={
-                    cell.value !== 0 ? "textCell" : `textCell ${cell.className}`
-                  }
+                  // className={
+                  //   cell.value !== 0 ? "textCell" : `textCell ${cell.className}`
+                  // }
+                  className={cell.className ? cell.className : "textCell"}
                   style={
                     cell.value !== 0
                       ? {
