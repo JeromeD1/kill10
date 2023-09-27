@@ -1,0 +1,44 @@
+const colorValues = [
+ 
+    {
+        value: 1,
+        color: "rgb(200,200,50)"
+    },
+    {
+        value: 9,
+        color: "rgb(210,210,50)"
+    },
+    
+    {
+        value: 2,
+        color: "rgb(200,150,50)"
+    },
+    {
+        value: 8,
+        color: "rgb(230,180,50)"
+    },
+    {
+        value: 3,
+        color: "rgb(220,90,50)"
+    },
+    {
+        value: 7,
+        color: "rgb(250,120,50)"
+    },
+    {
+        value: 4,
+        color: "rgb(230,100,170)"
+    },
+    {
+        value: 6,
+        color: "rgb(255,100,210)"
+    },
+    {
+        value: 5,
+        color: "rgb(180,50,255)"
+    },
+
+]
+
+
+export {colorValues}
