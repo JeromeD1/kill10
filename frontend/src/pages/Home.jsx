@@ -160,18 +160,19 @@ export default function Home() {
       const cell4 = myGrid.find((cell) => cell.x === x && cell.y === 4)
 
       if (
+        cell1.value !== 0 &&
         cell1.value === cell2.value &&
         cell1.value === cell3.value &&
         cell1.value === cell4.value
       ) {
-        setScore(score + 4 * cell1.value)
+        setScore((prevstate) => prevstate + 4 * cell1.value)
 
         newGrid = newGrid.map((cell) =>
           (cell.x === cell1.x && cell.y === cell1.y) ||
           (cell.x === cell2.x && cell.y === cell2.y) ||
           (cell.x === cell3.x && cell.y === cell3.y) ||
           (cell.x === cell4.x && cell.y === cell4.y)
-            ? { ...cell, value: 0 }
+            ? { ...cell, value: 0, className: "explosion" }
             : cell
         )
       }
@@ -185,18 +186,19 @@ export default function Home() {
       const cell4 = myGrid.find((cell) => cell.x === 4 && cell.y === y)
 
       if (
+        cell1.value !== 0 &&
         cell1.value === cell2.value &&
         cell1.value === cell3.value &&
         cell1.value === cell4.value
       ) {
-        setScore(score + 4 * cell1.value)
+        setScore((prevstate) => prevstate + 4 * cell1.value)
 
         newGrid = newGrid.map((cell) =>
           (cell.x === cell1.x && cell.y === cell1.y) ||
           (cell.x === cell2.x && cell.y === cell2.y) ||
           (cell.x === cell3.x && cell.y === cell3.y) ||
           (cell.x === cell4.x && cell.y === cell4.y)
-            ? { ...cell, value: 0 }
+            ? { ...cell, value: 0, className: "explosion" }
             : cell
         )
       }
@@ -227,69 +229,73 @@ export default function Home() {
         )
 
         if (
+          activeCell.value !== 0 &&
           activeCell.value === cellUp.value &&
           activeCell.value === cellUpLeft.value &&
           activeCell.value === cellLeft.value
         ) {
-          setScore(score + 4 * activeCell.value)
+          setScore((prevstate) => prevstate + 4 * activeCell.value)
 
           newGrid = newGrid.map((cell) =>
             (cell.x === activeCell.x && cell.y === activeCell.y) ||
             (cell.x === cellUp.x && cell.y === cellUp.y) ||
             (cell.x === cellUpLeft.x && cell.y === cellUpLeft.y) ||
             (cell.x === cellLeft.x && cell.y === cellLeft.y)
-              ? { ...cell, value: 0 }
+              ? { ...cell, value: 0, className: "explosion" }
               : cell
           )
         }
 
         if (
+          activeCell.value !== 0 &&
           activeCell.value === cellUp.value &&
           activeCell.value === cellUpRight.value &&
           activeCell.value === cellRight.value
         ) {
-          setScore(score + 4 * activeCell.value)
+          setScore((prevstate) => prevstate + 4 * activeCell.value)
 
           newGrid = newGrid.map((cell) =>
             (cell.x === activeCell.x && cell.y === activeCell.y) ||
             (cell.x === cellUp.x && cell.y === cellUp.y) ||
             (cell.x === cellUpRight.x && cell.y === cellUpRight.y) ||
             (cell.x === cellRight.x && cell.y === cellRight.y)
-              ? { ...cell, value: 0 }
+              ? { ...cell, value: 0, className: "explosion" }
               : cell
           )
         }
 
         if (
+          activeCell.value !== 0 &&
           activeCell.value === cellDown.value &&
           activeCell.value === cellDownLeft.value &&
           activeCell.value === cellLeft.value
         ) {
-          setScore(score + 4 * activeCell.value)
+          setScore((prevstate) => prevstate + 4 * activeCell.value)
 
           newGrid = newGrid.map((cell) =>
             (cell.x === activeCell.x && cell.y === activeCell.y) ||
             (cell.x === cellDown.x && cell.y === cellDown.y) ||
             (cell.x === cellDownLeft.x && cell.y === cellDownLeft.y) ||
             (cell.x === cellLeft.x && cell.y === cellLeft.y)
-              ? { ...cell, value: 0 }
+              ? { ...cell, value: 0, className: "explosion" }
               : cell
           )
         }
 
         if (
+          activeCell.value !== 0 &&
           activeCell.value === cellDown.value &&
           activeCell.value === cellDownRight.value &&
           activeCell.value === cellRight.value
         ) {
-          setScore(score + 4 * activeCell.value)
+          setScore((prevstate) => prevstate + 4 * activeCell.value)
 
           newGrid = newGrid.map((cell) =>
             (cell.x === activeCell.x && cell.y === activeCell.y) ||
             (cell.x === cellDown.x && cell.y === cellDown.y) ||
             (cell.x === cellDownRight.x && cell.y === cellDownRight.y) ||
             (cell.x === cellRight.x && cell.y === cellRight.y)
-              ? { ...cell, value: 0 }
+              ? { ...cell, value: 0, className: "explosion" }
               : cell
           )
         }
@@ -404,7 +410,7 @@ export default function Home() {
 
             newScore += 10
             changeGrid = true // il y a eu une modification donc changeGrid passe à true
-          } else if (cell.value === 0) {
+          } else if (cell.value === 0 && cell.className !== "disappear") {
             // la valeur de la cellule est 0 et est différente de la valeur de la cellule suivante
             newGrid = newGrid.map(
               (cellule) =>
@@ -419,12 +425,12 @@ export default function Home() {
                   : cellule // les autres cellules ne changent pas
             )
 
-            if (cellnext.value !== cell.value) {
+            if (
+              cellnext.value !== cell.value &&
+              cell.className !== "disappear"
+            ) {
               changeGrid = true
             } // il y a eu une modification donc changeGrid passe à true
-          } else if (cell.value !== cellnext.value) {
-            // les valeurs de la cellule et de la suivante sont différentes mais cell.value !== 0
-            newGrid = newGrid // on ne fait rien
           }
         }
       }
@@ -439,14 +445,16 @@ export default function Home() {
           (cell) => cell.x === x && cell.y === y + 1
         )
 
-        if (cell.value === 0 && cellnext.value !== 0) {
+        if (
+          cell.value === 0 &&
+          cell.className !== "disappear" &&
+          cellnext.value !== 0
+        ) {
           allOnLeft = false
         }
       }
     }
 
-    // console.log("allOnLeft",allOnLeft);
-    // console.log("changeGrid", changeGrid);
     // si allOnLeft = true et que changeGrid = false on rajoute un chiffre
     if (allOnLeft === true && changeGrid === false) {
       if (count > 0) {
@@ -472,15 +480,125 @@ export default function Home() {
     handleGameOver(newGrid)
 
     setGridKill10(newGrid)
-    console.log("newGrid", newGrid);
 
     setScore(score + newScore)
   }
+
+  // const swipeTop = (myGrid, count, newScore) => {
+  //   // let newGrid = gridKill10
+  //   let newGrid = myGrid
+
+  //   let changeGrid = false
+  //   // let oneChangeMergeable = false
+
+  //   for (let x = 1; x < 5; x++) {
+  //     for (let y = 1; y < 5; y++) {
+  //       const cell = newGrid.find((cell) => cell.x === x && cell.y === y)
+  //       const cellnext = newGrid.find(
+  //         (cell) => cell.x === x + 1 && cell.y === y
+  //       )
+  //       if (cell.x < 4) {
+  //         // si cellNext.value = cell.value alors on fusionne en cell et on passe cellNext.value à null
+  //         if (
+  //           cellnext.value + cell.value === 10 &&
+  //           cell.mergeable === true &&
+  //           cellnext.mergeable === true
+  //         ) {
+  //           // si la valeur de la cellule et la suivante sont identiques
+
+  //           // les cellules ont des valeurs identiques mais différentes de 0
+
+  //           newGrid = newGrid.map(
+  //             (cellule) =>
+  //               cellule.x === x && cellule.y === y // la cellule regardée
+  //                 ? {
+  //                     ...cellule,
+  //                     value: 0,
+  //                     mergeable: false,
+  //                   } // double sa valeur et sa valeur ne peut plus fusionner avec une autre cellule
+  //                 : cellule.x === x + 1 && cellule.y === y // la valeur de la cellule suivante
+  //                 ? { ...cellule, value: 0 } // devient 0
+  //                 : cellule // les autres cellules ne bougent pas
+  //           )
+
+  //           newScore += 10
+  //           changeGrid = true // il y a eu une modification donc changeGrid passe à true
+  //         } else if (cell.value === 0) {
+  //           // la valeur de la cellule est 0 et est différente de la valeur de la cellule suivante
+  //           newGrid = newGrid.map(
+  //             (cellule) =>
+  //               cellule.x === x && cellule.y === y // la cellule regardée
+  //                 ? { ...cellule, value: cellnext.value } // prend la valeur de la cellule suivante
+  //                 : cellule.x === x + 1 && cellule.y === y // la cellule suivante
+  //                 ? { ...cellule, value: 0 } // devient nulle (0) car elle a été déplacée
+  //                 : cellule // les autres cellules ne changent pas
+  //           )
+
+  //           if (cellnext.value !== cell.value) {
+  //             changeGrid = true
+  //           } // il y a eu une modification donc changeGrid passe à true
+  //         } else if (cell.value !== cellnext.value) {
+  //           // les valeurs de la cellule et de la suivante sont différentes mais cell.value !== 0
+  //           newGrid = newGrid // on ne fait rien
+  //         }
+  //       }
+  //     }
+  //   }
+
+  //   // vérification que tous les éléments sont à gauche avant d'ajouter un nouveau nombre
+  //   let allOnTop = true
+  //   for (let x = 1; x < 4; x++) {
+  //     for (let y = 1; y < 5; y++) {
+  //       const cell = newGrid.find((cell) => cell.x === x && cell.y === y)
+  //       const cellnext = newGrid.find(
+  //         (cell) => cell.x === x + 1 && cell.y === y
+  //       )
+
+  //       if (cell.value === 0 && cellnext.value !== 0) {
+  //         allOnTop = false
+  //       }
+  //     }
+  //   }
+
+  //   // console.log("allOnTop",allOnTop);
+  //   // console.log("changeGrid", changeGrid);
+
+  //   // si allOnTop = true et que changeGrid = false on rajoute un chiffre
+  //   if (allOnTop === true && changeGrid === false) {
+  //     if (count > 0) {
+  //       // on vérifie s'il y a des lignes colonnes ou carrés pleins de la même valeur
+  //       newGrid = handleDeleteLineAndSquare(newGrid)
+
+  //       const newPosition = findFreeRandomPosition(newGrid)
+  //       // on rajoute le nouveau chiffre à la grille
+  //       newGrid = newGrid.map((cell) =>
+  //         cell.x === newPosition.randomX && cell.y === newPosition.randomY
+  //           ? { ...cell, value: handleRandomNewNumber() }
+  //           : cell
+  //       )
+
+  //       // on rend de nouveau toutes les cases mergeables
+  //       newGrid = newGrid.map((item) => ({ ...item, mergeable: true }))
+  //     }
+  //   } else {
+  //     handleGameOver(newGrid)
+  //     return swipeTop(newGrid, count + 1, newScore)
+  //   }
+
+  //   handleGameOver(newGrid)
+  //   setGridKill10(newGrid)
+  //   setScore(score + newScore)
   // }
 
   const swipeTop = (myGrid, count, newScore) => {
     // let newGrid = gridKill10
     let newGrid = myGrid
+
+    // réinitialisation des classes des cellules si myGrid = gridKill10
+    if (myGrid === gridKill10) {
+      newGrid = newGrid.map((cell) => ({ ...cell, className: "initial" }))
+      // console.log("newgrid initialisation", newGrid)
+    }
 
     let changeGrid = false
     // let oneChangeMergeable = false
@@ -492,14 +610,12 @@ export default function Home() {
           (cell) => cell.x === x + 1 && cell.y === y
         )
         if (cell.x < 4) {
-          // si cellNext.value = cell.value alors on fusionne en cell et on passe cellNext.value à null
+          // si cellNext.value + cell.value = 10 alors on supprime la cell en la passant à 0 et on passe cellNext.value à null
           if (
             cellnext.value + cell.value === 10 &&
             cell.mergeable === true &&
             cellnext.mergeable === true
           ) {
-            // si la valeur de la cellule et la suivante sont identiques
-
             // les cellules ont des valeurs identiques mais différentes de 0
 
             newGrid = newGrid.map(
@@ -509,6 +625,7 @@ export default function Home() {
                       ...cellule,
                       value: 0,
                       mergeable: false,
+                      className: "disappear",
                     } // double sa valeur et sa valeur ne peut plus fusionner avec une autre cellule
                   : cellule.x === x + 1 && cellule.y === y // la valeur de la cellule suivante
                   ? { ...cellule, value: 0 } // devient 0
@@ -517,23 +634,28 @@ export default function Home() {
 
             newScore += 10
             changeGrid = true // il y a eu une modification donc changeGrid passe à true
-          } else if (cell.value === 0) {
+          } else if (cell.value === 0 && cell.className !== "disappear") {
             // la valeur de la cellule est 0 et est différente de la valeur de la cellule suivante
             newGrid = newGrid.map(
               (cellule) =>
                 cellule.x === x && cellule.y === y // la cellule regardée
-                  ? { ...cellule, value: cellnext.value } // prend la valeur de la cellule suivante
+                  ? {
+                      ...cellule,
+                      value: cellnext.value,
+                      className:
+                        cellnext.value !== 0 ? "fromBottom" : "initial",
+                    } // prend la valeur de la cellule suivante
                   : cellule.x === x + 1 && cellule.y === y // la cellule suivante
                   ? { ...cellule, value: 0 } // devient nulle (0) car elle a été déplacée
                   : cellule // les autres cellules ne changent pas
             )
 
-            if (cellnext.value !== cell.value) {
+            if (
+              cellnext.value !== cell.value &&
+              cell.className !== "disappear"
+            ) {
               changeGrid = true
             } // il y a eu une modification donc changeGrid passe à true
-          } else if (cell.value !== cellnext.value) {
-            // les valeurs de la cellule et de la suivante sont différentes mais cell.value !== 0
-            newGrid = newGrid // on ne fait rien
           }
         }
       }
@@ -548,14 +670,15 @@ export default function Home() {
           (cell) => cell.x === x + 1 && cell.y === y
         )
 
-        if (cell.value === 0 && cellnext.value !== 0) {
+        if (
+          cell.value === 0 &&
+          cell.className !== "disappear" &&
+          cellnext.value !== 0
+        ) {
           allOnTop = false
         }
       }
     }
-
-    // console.log("allOnTop",allOnTop);
-    // console.log("changeGrid", changeGrid);
 
     // si allOnTop = true et que changeGrid = false on rajoute un chiffre
     if (allOnTop === true && changeGrid === false) {
@@ -567,7 +690,7 @@ export default function Home() {
         // on rajoute le nouveau chiffre à la grille
         newGrid = newGrid.map((cell) =>
           cell.x === newPosition.randomX && cell.y === newPosition.randomY
-            ? { ...cell, value: handleRandomNewNumber() }
+            ? { ...cell, value: handleRandomNewNumber(), className: "appear" }
             : cell
         )
 
@@ -580,13 +703,127 @@ export default function Home() {
     }
 
     handleGameOver(newGrid)
+
     setGridKill10(newGrid)
+
     setScore(score + newScore)
   }
+
+  // const swipeRight = (myGrid, count, newScore) => {
+  //   // let newGrid = gridKill10
+  //   let newGrid = myGrid
+
+  //   let changeGrid = false
+  //   // let oneChangeMergeable = false
+
+  //   for (let x = 1; x < 5; x++) {
+  //     for (let y = 4; y > 0; y--) {
+  //       const cell = newGrid.find((cell) => cell.x === x && cell.y === y)
+  //       const cellnext = newGrid.find(
+  //         (cell) => cell.x === x && cell.y === y - 1
+  //       )
+  //       if (cell.y > 1) {
+  //         // si cellNext.value = cell.value alors on fusionne en cell et on passe cellNext.value à null
+  //         if (
+  //           cellnext.value + cell.value === 10 &&
+  //           cell.mergeable === true &&
+  //           cellnext.mergeable === true
+  //         ) {
+  //           // si la valeur de la cellule et la suivante sont identiques
+
+  //           // les cellules ont des valeurs identiques mais différentes de 0
+
+  //           newGrid = newGrid.map(
+  //             (cellule) =>
+  //               cellule.x === x && cellule.y === y // la cellule regardée
+  //                 ? {
+  //                     ...cellule,
+  //                     value: 0,
+  //                     mergeable: false,
+  //                   } // double sa valeur et sa valeur ne peut plus fusionner avec une autre cellule
+  //                 : cellule.x === x && cellule.y === y - 1 // la valeur de la cellule suivante
+  //                 ? { ...cellule, value: 0 } // devient 0
+  //                 : cellule // les autres cellules ne bougent pas
+  //           )
+
+  //           newScore += 10
+  //           changeGrid = true // il y a eu une modification donc changeGrid passe à true
+  //         } else if (cell.value === 0) {
+  //           // la valeur de la cellule est 0 et est différente de la valeur de la cellule suivante
+  //           newGrid = newGrid.map(
+  //             (cellule) =>
+  //               cellule.x === x && cellule.y === y // la cellule regardée
+  //                 ? { ...cellule, value: cellnext.value } // prend la valeur de la cellule suivante
+  //                 : cellule.x === x && cellule.y === y - 1 // la cellule suivante
+  //                 ? { ...cellule, value: 0 } // devient nulle (0) car elle a été déplacée
+  //                 : cellule // les autres cellules ne changent pas
+  //           )
+
+  //           if (cellnext.value !== cell.value) {
+  //             changeGrid = true
+  //           } // il y a eu une modification donc changeGrid passe à true
+  //         } else if (cell.value !== cellnext.value) {
+  //           // les valeurs de la cellule et de la suivante sont différentes mais cell.value !== 0
+  //           newGrid = newGrid // on ne fait rien
+  //         }
+  //       }
+  //     }
+  //   }
+
+  //   // vérification que tous les éléments sont à gauche avant d'ajouter un nouveau nombre
+  //   let allOnRight = true
+  //   for (let x = 1; x < 5; x++) {
+  //     for (let y = 4; y > 1; y--) {
+  //       const cell = newGrid.find((cell) => cell.x === x && cell.y === y)
+  //       const cellnext = newGrid.find(
+  //         (cell) => cell.x === x && cell.y === y - 1
+  //       )
+
+  //       if (cell.value === 0 && cellnext.value !== 0) {
+  //         allOnRight = false
+  //       }
+  //     }
+  //   }
+
+  //   // console.log("allOnRight",allOnRight);
+  //   // console.log("changeGrid", changeGrid);
+
+  //   // si allOnRight = true et que changeGrid = false on rajoute un chiffre
+  //   if (allOnRight === true && changeGrid === false) {
+  //     if (count > 0) {
+  //       // on vérifie s'il y a des lignes colonnes ou carrés pleins de la même valeur
+  //       newGrid = handleDeleteLineAndSquare(newGrid)
+
+  //       const newPosition = findFreeRandomPosition(newGrid)
+  //       // on rajoute le nouveau chiffre à la grille
+  //       newGrid = newGrid.map((cell) =>
+  //         cell.x === newPosition.randomX && cell.y === newPosition.randomY
+  //           ? { ...cell, value: handleRandomNewNumber() }
+  //           : cell
+  //       )
+
+  //       // on rend de nouveau toutes les cases mergeables
+  //       newGrid = newGrid.map((item) => ({ ...item, mergeable: true }))
+  //     }
+  //   } else {
+  //     handleGameOver(newGrid)
+  //     return swipeRight(newGrid, count + 1, newScore)
+  //   }
+
+  //   handleGameOver(newGrid)
+  //   setGridKill10(newGrid)
+  //   setScore(score + newScore)
+  // }
 
   const swipeRight = (myGrid, count, newScore) => {
     // let newGrid = gridKill10
     let newGrid = myGrid
+
+    // réinitialisation des classes des cellules si myGrid = gridKill10
+    if (myGrid === gridKill10) {
+      newGrid = newGrid.map((cell) => ({ ...cell, className: "initial" }))
+      // console.log("newgrid initialisation", newGrid)
+    }
 
     let changeGrid = false
     // let oneChangeMergeable = false
@@ -598,14 +835,12 @@ export default function Home() {
           (cell) => cell.x === x && cell.y === y - 1
         )
         if (cell.y > 1) {
-          // si cellNext.value = cell.value alors on fusionne en cell et on passe cellNext.value à null
+          // si cellNext.value + cell.value = 10 alors on supprime la cell en la passant à 0 et on passe cellNext.value à null
           if (
             cellnext.value + cell.value === 10 &&
             cell.mergeable === true &&
             cellnext.mergeable === true
           ) {
-            // si la valeur de la cellule et la suivante sont identiques
-
             // les cellules ont des valeurs identiques mais différentes de 0
 
             newGrid = newGrid.map(
@@ -615,6 +850,7 @@ export default function Home() {
                       ...cellule,
                       value: 0,
                       mergeable: false,
+                      className: "disappear",
                     } // double sa valeur et sa valeur ne peut plus fusionner avec une autre cellule
                   : cellule.x === x && cellule.y === y - 1 // la valeur de la cellule suivante
                   ? { ...cellule, value: 0 } // devient 0
@@ -623,23 +859,27 @@ export default function Home() {
 
             newScore += 10
             changeGrid = true // il y a eu une modification donc changeGrid passe à true
-          } else if (cell.value === 0) {
+          } else if (cell.value === 0 && cell.className !== "disappear") {
             // la valeur de la cellule est 0 et est différente de la valeur de la cellule suivante
             newGrid = newGrid.map(
               (cellule) =>
                 cellule.x === x && cellule.y === y // la cellule regardée
-                  ? { ...cellule, value: cellnext.value } // prend la valeur de la cellule suivante
+                  ? {
+                      ...cellule,
+                      value: cellnext.value,
+                      className: cellnext.value !== 0 ? "fromLeft" : "initial",
+                    } // prend la valeur de la cellule suivante
                   : cellule.x === x && cellule.y === y - 1 // la cellule suivante
                   ? { ...cellule, value: 0 } // devient nulle (0) car elle a été déplacée
                   : cellule // les autres cellules ne changent pas
             )
 
-            if (cellnext.value !== cell.value) {
+            if (
+              cellnext.value !== cell.value &&
+              cell.className !== "disappear"
+            ) {
               changeGrid = true
             } // il y a eu une modification donc changeGrid passe à true
-          } else if (cell.value !== cellnext.value) {
-            // les valeurs de la cellule et de la suivante sont différentes mais cell.value !== 0
-            newGrid = newGrid // on ne fait rien
           }
         }
       }
@@ -654,14 +894,15 @@ export default function Home() {
           (cell) => cell.x === x && cell.y === y - 1
         )
 
-        if (cell.value === 0 && cellnext.value !== 0) {
+        if (
+          cell.value === 0 &&
+          cell.className !== "disappear" &&
+          cellnext.value !== 0
+        ) {
           allOnRight = false
         }
       }
     }
-
-    // console.log("allOnRight",allOnRight);
-    // console.log("changeGrid", changeGrid);
 
     // si allOnRight = true et que changeGrid = false on rajoute un chiffre
     if (allOnRight === true && changeGrid === false) {
@@ -673,7 +914,7 @@ export default function Home() {
         // on rajoute le nouveau chiffre à la grille
         newGrid = newGrid.map((cell) =>
           cell.x === newPosition.randomX && cell.y === newPosition.randomY
-            ? { ...cell, value: handleRandomNewNumber() }
+            ? { ...cell, value: handleRandomNewNumber(), className: "appear" }
             : cell
         )
 
@@ -686,13 +927,127 @@ export default function Home() {
     }
 
     handleGameOver(newGrid)
+
     setGridKill10(newGrid)
+
     setScore(score + newScore)
   }
+
+  // const swipeBottom = (myGrid, count, newScore) => {
+  //   // let newGrid = gridKill10
+  //   let newGrid = myGrid
+
+  //   let changeGrid = false
+  //   // let oneChangeMergeable = false
+
+  //   for (let x = 4; x > 0; x--) {
+  //     for (let y = 1; y < 5; y++) {
+  //       const cell = newGrid.find((cell) => cell.x === x && cell.y === y)
+  //       const cellnext = newGrid.find(
+  //         (cell) => cell.x === x - 1 && cell.y === y
+  //       )
+  //       if (cell.x > 1) {
+  //         // si cellNext.value = cell.value alors on fusionne en cell et on passe cellNext.value à null
+  //         if (
+  //           cellnext.value + cell.value === 10 &&
+  //           cell.mergeable === true &&
+  //           cellnext.mergeable === true
+  //         ) {
+  //           // si la valeur de la cellule et la suivante sont identiques
+
+  //           // les cellules ont des valeurs identiques mais différentes de 0
+
+  //           newGrid = newGrid.map(
+  //             (cellule) =>
+  //               cellule.x === x && cellule.y === y // la cellule regardée
+  //                 ? {
+  //                     ...cellule,
+  //                     value: 0,
+  //                     mergeable: false,
+  //                   } // double sa valeur et sa valeur ne peut plus fusionner avec une autre cellule
+  //                 : cellule.x === x - 1 && cellule.y === y // la valeur de la cellule suivante
+  //                 ? { ...cellule, value: 0 } // devient 0
+  //                 : cellule // les autres cellules ne bougent pas
+  //           )
+
+  //           newScore += 10
+  //           changeGrid = true // il y a eu une modification donc changeGrid passe à true
+  //         } else if (cell.value === 0) {
+  //           // la valeur de la cellule est 0 et est différente de la valeur de la cellule suivante
+  //           newGrid = newGrid.map(
+  //             (cellule) =>
+  //               cellule.x === x && cellule.y === y // la cellule regardée
+  //                 ? { ...cellule, value: cellnext.value } // prend la valeur de la cellule suivante
+  //                 : cellule.x === x - 1 && cellule.y === y // la cellule suivante
+  //                 ? { ...cellule, value: 0 } // devient nulle (0) car elle a été déplacée
+  //                 : cellule // les autres cellules ne changent pas
+  //           )
+
+  //           if (cellnext.value !== cell.value) {
+  //             changeGrid = true
+  //           } // il y a eu une modification donc changeGrid passe à true
+  //         } else if (cell.value !== cellnext.value) {
+  //           // les valeurs de la cellule et de la suivante sont différentes mais cell.value !== 0
+  //           newGrid = newGrid // on ne fait rien
+  //         }
+  //       }
+  //     }
+  //   }
+
+  //   // vérification que tous les éléments sont à gauche avant d'ajouter un nouveau nombre
+  //   let allOnBottom = true
+  //   for (let x = 4; x > 1; x--) {
+  //     for (let y = 1; y < 5; y++) {
+  //       const cell = newGrid.find((cell) => cell.x === x && cell.y === y)
+  //       const cellnext = newGrid.find(
+  //         (cell) => cell.x === x - 1 && cell.y === y
+  //       )
+
+  //       if (cell.value === 0 && cellnext.value !== 0) {
+  //         allOnBottom = false
+  //       }
+  //     }
+  //   }
+
+  //   // console.log("allOnBottom",allOnBottom);
+  //   // console.log("changeGrid", changeGrid);
+
+  //   // si allOnBottom = true et que changeGrid = false on rajoute un chiffre
+  //   if (allOnBottom === true && changeGrid === false) {
+  //     if (count > 0) {
+  //       // on vérifie s'il y a des lignes colonnes ou carrés pleins de la même valeur
+  //       newGrid = handleDeleteLineAndSquare(newGrid)
+
+  //       const newPosition = findFreeRandomPosition(newGrid)
+  //       // on rajoute le nouveau chiffre à la grille
+  //       newGrid = newGrid.map((cell) =>
+  //         cell.x === newPosition.randomX && cell.y === newPosition.randomY
+  //           ? { ...cell, value: handleRandomNewNumber() }
+  //           : cell
+  //       )
+
+  //       // on rend de nouveau toutes les cases mergeables
+  //       newGrid = newGrid.map((item) => ({ ...item, mergeable: true }))
+  //     }
+  //   } else {
+  //     handleGameOver(newGrid)
+  //     return swipeBottom(newGrid, count + 1, newScore)
+  //   }
+
+  //   handleGameOver(newGrid)
+  //   setGridKill10(newGrid)
+  //   setScore(score + newScore)
+  // }
 
   const swipeBottom = (myGrid, count, newScore) => {
     // let newGrid = gridKill10
     let newGrid = myGrid
+
+    // réinitialisation des classes des cellules si myGrid = gridKill10
+    if (myGrid === gridKill10) {
+      newGrid = newGrid.map((cell) => ({ ...cell, className: "initial" }))
+      // console.log("newgrid initialisation", newGrid)
+    }
 
     let changeGrid = false
     // let oneChangeMergeable = false
@@ -704,14 +1059,12 @@ export default function Home() {
           (cell) => cell.x === x - 1 && cell.y === y
         )
         if (cell.x > 1) {
-          // si cellNext.value = cell.value alors on fusionne en cell et on passe cellNext.value à null
+          // si cellNext.value + cell.value = 10 alors on supprime la cell en la passant à 0 et on passe cellNext.value à null
           if (
             cellnext.value + cell.value === 10 &&
             cell.mergeable === true &&
             cellnext.mergeable === true
           ) {
-            // si la valeur de la cellule et la suivante sont identiques
-
             // les cellules ont des valeurs identiques mais différentes de 0
 
             newGrid = newGrid.map(
@@ -721,6 +1074,7 @@ export default function Home() {
                       ...cellule,
                       value: 0,
                       mergeable: false,
+                      className: "disappear",
                     } // double sa valeur et sa valeur ne peut plus fusionner avec une autre cellule
                   : cellule.x === x - 1 && cellule.y === y // la valeur de la cellule suivante
                   ? { ...cellule, value: 0 } // devient 0
@@ -729,23 +1083,27 @@ export default function Home() {
 
             newScore += 10
             changeGrid = true // il y a eu une modification donc changeGrid passe à true
-          } else if (cell.value === 0) {
+          } else if (cell.value === 0 && cell.className !== "disappear") {
             // la valeur de la cellule est 0 et est différente de la valeur de la cellule suivante
             newGrid = newGrid.map(
               (cellule) =>
                 cellule.x === x && cellule.y === y // la cellule regardée
-                  ? { ...cellule, value: cellnext.value } // prend la valeur de la cellule suivante
+                  ? {
+                      ...cellule,
+                      value: cellnext.value,
+                      className: cellnext.value !== 0 ? "fromTop" : "initial",
+                    } // prend la valeur de la cellule suivante
                   : cellule.x === x - 1 && cellule.y === y // la cellule suivante
                   ? { ...cellule, value: 0 } // devient nulle (0) car elle a été déplacée
                   : cellule // les autres cellules ne changent pas
             )
 
-            if (cellnext.value !== cell.value) {
+            if (
+              cellnext.value !== cell.value &&
+              cell.className !== "disappear"
+            ) {
               changeGrid = true
             } // il y a eu une modification donc changeGrid passe à true
-          } else if (cell.value !== cellnext.value) {
-            // les valeurs de la cellule et de la suivante sont différentes mais cell.value !== 0
-            newGrid = newGrid // on ne fait rien
           }
         }
       }
@@ -760,14 +1118,15 @@ export default function Home() {
           (cell) => cell.x === x - 1 && cell.y === y
         )
 
-        if (cell.value === 0 && cellnext.value !== 0) {
+        if (
+          cell.value === 0 &&
+          cell.className !== "disappear" &&
+          cellnext.value !== 0
+        ) {
           allOnBottom = false
         }
       }
     }
-
-    // console.log("allOnBottom",allOnBottom);
-    // console.log("changeGrid", changeGrid);
 
     // si allOnBottom = true et que changeGrid = false on rajoute un chiffre
     if (allOnBottom === true && changeGrid === false) {
@@ -779,7 +1138,7 @@ export default function Home() {
         // on rajoute le nouveau chiffre à la grille
         newGrid = newGrid.map((cell) =>
           cell.x === newPosition.randomX && cell.y === newPosition.randomY
-            ? { ...cell, value: handleRandomNewNumber() }
+            ? { ...cell, value: handleRandomNewNumber(), className: "appear" }
             : cell
         )
 
@@ -792,7 +1151,9 @@ export default function Home() {
     }
 
     handleGameOver(newGrid)
+
     setGridKill10(newGrid)
+
     setScore(score + newScore)
   }
 
@@ -916,9 +1277,10 @@ export default function Home() {
             >
               {
                 <p
-                  className={
-                    cell.value !== 0 ? "textCell" : `textCell ${cell.className}`
-                  }
+                  // className={
+                  //   cell.value !== 0 ? "textCell" : `textCell ${cell.className}`
+                  // }
+                  className={cell.className ? cell.className : "textCell"}
                   style={
                     cell.value !== 0
                       ? {
