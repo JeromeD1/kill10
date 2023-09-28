@@ -1484,7 +1484,7 @@ export default function Home() {
                       : null
                   }
                 >
-                  {cell.value}
+                  {cell.value !== 0 ? cell.value : null}
                 </p>
                 // <p>{"x" + cell.x + " - y"  + cell.y + "val" + cell.value + "  " + cell.mergeable} </p>
               }

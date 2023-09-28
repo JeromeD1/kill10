@@ -125,7 +125,7 @@
 
         .explosion {
           animation: animExplosion ease 1s;
-          color: rgba(0, 0, 0, 0);
+          color: rgba(255, 255, 255, 1);
         }
 
         .fromRight {
@@ -230,6 +230,7 @@
 
 @keyframes animExplosion {
   0% {
+    color: rgba(0, 0, 0, 1);
     opacity: 1;
     clip-path: polygon(
       50% 0%,
@@ -264,6 +265,7 @@
     transform: scale(1.5);
   }
   100% {
+    color: rgba(255, 255, 255, 1);
     opacity: 0;
     background-color: black;
     transform: scale(0) rotate(720deg);
